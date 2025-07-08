@@ -474,10 +474,15 @@
                     const modal = document.getElementById(modalId);
                     if(modal) btn.addEventListener('click', () => modal.classList.remove('active'));
                 });
+                
+                document.getElementById('calc-btn').addEventListener('click', () => {
+                    document.getElementById('calc-input').value = history.map(h => h.value).join(' ');
+                    document.getElementById('calc-modal').classList.add('active');
+                });
 
                 document.getElementById('confirm-reset-btn').addEventListener('click', () => { resetCalculator(); });
                 document.getElementById('confirm-delete-session-btn').addEventListener('click', () => { if(sessionToDeleteId) deleteSession(sessionToDeleteId); sessionToDeleteId = null; });
-                document.getElementById('update-calc-btn').addEventListener('click', () => { const values = document.getElementById('calc-input').value.trim().split(' ').map(Number).filter(n => !isNaN(n)); resetCalculator(); history = []; values.forEach(val => handleButtonClick(val)); });
+                document.getElementById('update-calc-btn').addEventListener('click', () => { const values = document.getElementById('calc-input').value.trim().split(' ').map(Number).filter(n => !isNaN(n)); resetCalculator(); history = []; values.forEach(val => handleButtonClick(val)); document.getElementById('calc-modal').classList.remove('active'); });
                 document.getElementById('confirm-save-btn').addEventListener('click', async () => { 
                     const currentTemplate = templates[templateSelector.value];
                     if (!currentTemplate) { alert("Please select a valid template."); return; }
